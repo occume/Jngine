@@ -4,6 +4,8 @@ import org.jngine.Context;
 import org.jngine.Session;
 
 public interface Message<T> {
+	
+	public int getId();
 
 	public int getType();
 	

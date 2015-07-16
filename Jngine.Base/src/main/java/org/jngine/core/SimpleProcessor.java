@@ -3,6 +3,7 @@ package org.jngine.core;
 import org.jngine.Processor;
 import org.jngine.anno.Module;
 import org.jngine.message.Message;
+import org.jngine.net.adapter.Broadcaster;
 import org.jngine.net.packet.Game;
 import org.jngine.net.packet.PbDecoder;
 import org.jngine.net.packet.Game.Login;
@@ -20,5 +21,7 @@ public class SimpleProcessor implements Processor{
 		
 		Login login = msg.getCandy();
 		System.out.println(login);
+		
+		Broadcaster.send(msg);
 	}
 }

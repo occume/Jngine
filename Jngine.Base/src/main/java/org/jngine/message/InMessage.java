@@ -5,14 +5,20 @@ import org.jngine.Session;
 
 public class InMessage<T> implements Message<T>{
 
+	private int id;
 	private int type;
 	private T candy;
 	private Context context;
 	private Session session;
 	
-	public InMessage(int type, T msg){
+	public InMessage(int id, int type, T msg){
+		this.id = id;
 		this.type = type;
 		this.candy = msg;
+	}
+	
+	public int getId(){
+		return id;
 	}
 
 	public int getType(){

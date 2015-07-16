@@ -49,7 +49,7 @@ public class FirstDecoder extends ByteToMessageDecoder {
 			int type = in.readByte();
 			in.readBytes(body);
 
-			out.add(new RawMessage(type, body));
+			out.add(new RawMessage(msgId, type, body));
 			pos = Pos.HEAD;
 		}
 	}

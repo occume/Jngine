@@ -1,6 +1,7 @@
 package org.jngine.core;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 import org.jngine.Connector;
@@ -8,6 +9,7 @@ import org.jngine.Engine;
 import org.jngine.Listener;
 import org.jngine.Server;
 import org.jngine.net.NettyConnector;
+import org.jngine.util.Stat;
 
 public class SimpleServer implements Server {
 	
@@ -23,13 +25,17 @@ public class SimpleServer implements Server {
 
 	@Override
 	public void init() {
+		
 		connector = new NettyConnector();
+		
 		engine = new SimpleEngine();
+		
 		connector.setEngine(engine);
 		
 		listeners = new ArrayList<>(10);
 		
 		connector.init();
+		
 		engine.init();
 	}
 
@@ -42,6 +48,7 @@ public class SimpleServer implements Server {
 			listener.onStart();
 		}
 		
+		Stat.instance().setServerStartDate(new Date());
 		System.out.println("server started");
 	}
 

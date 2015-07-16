@@ -30,7 +30,7 @@ public class FirstHandler extends SimpleChannelInboundHandler<RawMessage> {
 	
 	private <T> Message<T> parse(RawMessage msg){
 		T t = PbDecoder.parse(1, msg.getData());
-		return new InMessage<T>(msg.getType(), t);
+		return new InMessage<T>(msg.getId(), msg.getType(), t);
 	}
 
 	@Override

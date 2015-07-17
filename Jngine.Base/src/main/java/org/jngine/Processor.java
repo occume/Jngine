@@ -1,8 +1,8 @@
 package org.jngine;
 
-import org.jngine.message.Message;
+import org.jngine.message.InMessage;
 
 public interface Processor{
 	
-	public <T> void process(Message<T> msg);
+	public void process(InMessage in);
 }

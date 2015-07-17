@@ -3,15 +3,12 @@ package org.jngine.message;
 import org.jngine.Context;
 import org.jngine.Session;
 
-public class InMessage<T> implements Message<T>{
-
-	private int id;
-	private int type;
-	private T candy;
-	private Context context;
-	private Session session;
+public class InMessage extends BaseMessage implements Message{
 	
-	public InMessage(int id, int type, T msg){
+	private OutMessage out;
+	
+	public InMessage(Session session, int id, int type, Object msg){
+		this.session = session;
 		this.id = id;
 		this.type = type;
 		this.candy = msg;
@@ -25,8 +22,8 @@ public class InMessage<T> implements Message<T>{
 		return type;
 	}
 	
-	public T getCandy(){
-		return candy;
+	public <T> T getCandy(){
+		return (T) candy;
 	}
 
 	@Override
@@ -37,6 +34,14 @@ public class InMessage<T> implements Message<T>{
 	@Override
 	public Context getContext() {
 		return context;
+	}
+	
+	public OutMessage getOut(){
+		return out;
+	}
+	
+	public void setOut(OutMessage out){
+		this.out = out;
 	}
 	
 	@Override

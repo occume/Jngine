@@ -12,15 +12,14 @@ public class StandardManager extends BaseLifecycle implements Manager {
 	
 	private Map<String, Session> sessions = new ConcurrentHashMap<>();
 
-	@Override
-	public Session createSession() {
-		return new StandardSession();
+	public Session createSession(ChannelSession session) {
+		return new StandardSession(session);
 	}
 
 	@Override
 	public void addSession(ChannelSession session) {
-		Session ss = createSession();
-//		session.getChannel().
+		Session ss = createSession(session);
+		session.setSession(ss);
 		sessions.put("", ss);
 	}
 

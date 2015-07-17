@@ -4,7 +4,9 @@ import org.jngine.Connector;
 import io.netty.channel.ChannelHandlerContext;
 import io.netty.channel.ChannelInboundHandlerAdapter;
 import io.netty.channel.socket.SocketChannel;
+import io.netty.channel.ChannelHandler.Sharable;
 
+@Sharable
 public class ClientFilter extends ChannelInboundHandlerAdapter {
 	
 	private Connector connector;

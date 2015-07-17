@@ -8,7 +8,9 @@ import org.jngine.Context;
 import org.jngine.Engine;
 import org.jngine.Processor;
 import org.jngine.anno.Module;
-import org.jngine.message.Message;
+import org.jngine.message.InMessage;
+import org.jngine.message.OutMessage;
+import org.jngine.net.adapter.Broadcaster;
 import org.jngine.util.Reflection;
 
 public class SimpleEngine extends BaseLifecycle implements Engine {
@@ -47,7 +49,7 @@ public class SimpleEngine extends BaseLifecycle implements Engine {
 	}
 
 	@Override
-	public <T> void dispatch(Message<T> msg) {
+	public void dispatch(InMessage msg) {
 		
 		Processor processor = mapping.get(msg.getType());
 		
@@ -55,7 +57,12 @@ public class SimpleEngine extends BaseLifecycle implements Engine {
 			System.out.println("invalid cmd");
 			return;
 		}
+		
+		OutMessage out = new OutMessage(msg);
+		
 		processor.process(msg);
+		
+		Broadcaster.send(out);
 	}
 
 	@Override

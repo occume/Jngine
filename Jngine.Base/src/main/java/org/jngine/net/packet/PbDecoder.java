@@ -1,5 +1,9 @@
 package org.jngine.net.packet;
 
+import io.protostuff.ProtobufIOUtil;
+import io.protostuff.Schema;
+import io.protostuff.runtime.RuntimeSchema;
+
 import java.lang.reflect.Method;
 import java.util.HashMap;
 import java.util.Map;
@@ -19,8 +23,14 @@ public class PbDecoder {
 	private static Method parseFrom;
 	private static Method getExtension;
 	
+	private static Map<Integer, Class> msgBeans = new HashMap<>();
+	
 	public static void setSuperPacketName(String name){
 		superPacketName = name;
+	}
+	
+	public static void registerMsgBean(int type, Class beanClass){
+		msgBeans.put(type, beanClass);
 	}
 	
 	public static <T> void registerExtension(int type, GeneratedExtension<?, T> extension){
@@ -58,4 +68,14 @@ public class PbDecoder {
 		return (T) ret;
 	}
 	
+	public static<T> T parse1(int type, byte[] data) throws Exception{
+		
+		Class<T> clazz = msgBeans.get(type);
+		
+		Schema<T> schema = RuntimeSchema.getSchema(clazz);
+		
+		T t = clazz.newInstance();
+		ProtobufIOUtil.mergeFrom(data, t, schema);
+		return t;
+	}
 }

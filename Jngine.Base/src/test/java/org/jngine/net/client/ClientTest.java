@@ -44,25 +44,29 @@ public class ClientTest {
 			conn.getOutputStream().write(msg.array());
 //			conn.getOutputStream().close();
 			
-			byte[] recvBuf = new byte[128];
-			conn.getInputStream().read(recvBuf);
-			handleResonse(recvBuf);
+			while(true){
+				byte[] recvBuf = new byte[128];
+				int readed = conn.getInputStream().read(recvBuf);
+				if(readed == -1) break;
+				handleResonse(recvBuf);
+			}
 			
 			conn.close();
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
 		
-		Thread.sleep(3000);
+//		Thread.sleep(3000000);
 	}
 	
 	private static void handleResonse(byte[] recvBuf){
 		ByteBuf msg = Unpooled.wrappedBuffer(recvBuf);
+		int tlen = msg.readInt();
 		int major = msg.readByte();
 		int minor = msg.readByte();
 		int msgId = msg.readInt();
-		int statu = msg.readInt();
-		int reason = msg.readInt();
+		int statu = msg.readByte();
+		int reason = msg.readByte();
 		int verify = msg.readByte();
 		int len = msg.readInt();
 		

@@ -25,7 +25,7 @@ public class ClientFilter extends ChannelInboundHandlerAdapter {
 		if(ip.equals("127.0.0.1")){
 			channel.pipeline().addLast(exceptionHandler);
 			channel.pipeline().addLast(new FirstDecoder());
-			channel.pipeline().addLast(new FirstHandler(connector));
+			channel.pipeline().addLast("first", new FirstHandler(connector));
 			channel.pipeline().remove(this);
 			ctx.fireChannelActive();
 		}

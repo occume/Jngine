@@ -3,6 +3,7 @@ package org.jngine.net.adapter;
 import org.jngine.Session;
 
 import io.netty.channel.Channel;
+import io.netty.channel.ChannelFutureListener;
 
 public class ChannelSession {
 	
@@ -27,5 +28,17 @@ public class ChannelSession {
 	
 	public void sendMsg(Object msg){
 		channel.writeAndFlush(msg);
+	}
+	
+	public void close(){
+		session.disconnect();
+		session = null;
+		channel.close();
+	}
+	
+	public void close(Object msg){
+		session.disconnect();
+		session = null;
+		channel.writeAndFlush(msg).addListener(ChannelFutureListener.CLOSE);
 	}
 }

@@ -10,7 +10,6 @@ public class OutMessage extends BaseMessage implements Message{
 	private int reason;
 	
 	public OutMessage(InMessage in){
-		in.setOut(this);
 		this.in = in;
 	}
 
